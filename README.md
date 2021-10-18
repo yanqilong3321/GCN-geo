@@ -1,6 +1,9 @@
 # Graph nerual network in geolocation
 ## Introducation
-图神经网络模型在geolocation数据集上的应用
+Application of graph neural network model in geolocation dataset
 
-## How to run ?
+## geolocation datasets
+Download and Details in [here](https://github.com/afshinrahimi/geographconv)
+
+## How to run 
 python train.py

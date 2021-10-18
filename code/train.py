@@ -58,11 +58,11 @@ if __name__ == '__main__':
     val_dataset  = TensorDataset(idx_val,labels[idx_val])
     train_loader = DataLoader(
         dataset=train_dataset,
-        batch_size=64,
-        shuffle=True)
+        batch_size=512,
+        shuffle=False)
     val_loader = DataLoader(
         dataset=val_dataset,
-        batch_size=64  ,
+        batch_size=512  ,
         shuffle=False)
     '''--------------------Training-----------------------'''
 
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         y_pred = output[idx_val].data.max(1, keepdim=True)[1].cpu().numpy().flatten()
 
 
-        geo_eval(None, y_pred, U_dev, classLatMedian, classLonMedian, userLocation)
+        metric=geo_eval(None, y_pred, U_dev, classLatMedian, classLonMedian, userLocation)
         loss_train = F.nll_loss(output[idx_train], labels[idx_train])
         acc_train = accuracy(output[idx_train], labels[idx_train])
         print('Epoch: {:04d}'.format(epoch + 1),
@@ -129,15 +129,16 @@ if __name__ == '__main__':
 
         '''Early Stopping'''
 
-        if acc_val -bestAccVal>0  or  loss_val-Minloss_val<0:
-            if acc_val -bestAccVal>0:
-                bestAccVal = acc_val
+        if metric['Acc@161'] -bestAccVal>0  or  loss_val-Minloss_val<0:
+            if metric['Acc@161'] -bestAccVal>0:
+                bestAccVal = metric['Acc@161']
+                Minloss_val = loss_val
                 lastEpoch = epoch
                 torch.save({'model_state_dict':model.state_dict(),
                         'epoch':epoch},
                        './params.pth')
             elif loss_val-Minloss_val<0:
-                Minloss_val = loss_val
+                Minloss_val = metric['Acc@161']
                 lastEpoch = epoch
                 torch.save({'model_state_dict': model.state_dict(),
                             'epoch': epoch},

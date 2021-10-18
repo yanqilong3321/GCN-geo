@@ -25,8 +25,7 @@ def geo_eval(y_true, y_pred, U_eval, classLatMedian, classLonMedian, userLocatio
 
     acc_at_161 = 100 * len([d for d in distances if d < 161]) / float(len(distances))
 
-    print("Mean: " + str(int(np.mean(distances))) + " Median: " + str(int(np.median(distances))) + " Acc@161: " + str(
-            int(acc_at_161)))
+    print("Mean: " + str(int(np.mean(distances))) + " Median: " + str(int(np.median(distances))) + " Acc@161: %.2f"% acc_at_161)
 
     metirc = {"Mean":int(np.mean(distances)) ,
                "Median" : int(np.median(distances)) ,

@@ -3,10 +3,9 @@
 Application of graph neural network model in geolocation dataset
 
 ## Require
-numpy
-torch
-pytorch_lightning
-dgl
+numpy==1.16.2
+torch==1.8.1
+pytorch_lightning==1.15
 
 
 ## geolocation datasets
